@@ -53,6 +53,12 @@
         .button:hover {
             background-color: #0056b3;
         }
+        .back-button {
+            background-color: #FF0000;
+        }
+        .back-button:hover {
+            background-color: #CC0000;
+        }
         .play-button {
             display: inline-block;
             margin-top: 20px;
@@ -80,7 +86,7 @@
         <!-- Поле для отображения набранного числа -->
         <div id="display" class="display">0</div>
 
-        <!-- Кнопки с числами -->
+        <!-- Кнопки с числами и кнопка "Back" -->
         <div class="button-container">
             <button class="button" onclick="addNumber(1)">1</button>
             <button class="button" onclick="addNumber(2)">2</button>
@@ -92,6 +98,7 @@
             <button class="button" onclick="addNumber(8)">8</button>
             <button class="button" onclick="addNumber(9)">9</button>
             <button class="button" onclick="addNumber(0)">0</button>
+            <button class="button back-button" onclick="removeLast()">←</button>
         </div>
 
         <!-- Кнопка "Play" -->
@@ -105,8 +112,14 @@
         function addNumber(num) {
             if (currentNumber.length < 5) { // Ограничение длины числа до 5 цифр
                 currentNumber += num;
-                document.getElementById('display').textContent = currentNumber;
+                document.getElementById('display').textContent = currentNumber || '0';
             }
+        }
+
+        // Функция для удаления последней цифры
+        function removeLast() {
+            currentNumber = currentNumber.slice(0, -1);
+            document.getElementById('display').textContent = currentNumber || '0';
         }
 
         // Функция для перехода по ссылке
