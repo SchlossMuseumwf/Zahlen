@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Museum Wolfenbüttel</title>
+    <title>Museum Guide</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,9 +14,6 @@
         .container {
             max-width: 600px;
             margin: auto;
-        }
-        h1 {
-            margin-bottom: 20px;
         }
         .instruction {
             margin-bottom: 30px;
@@ -77,9 +74,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>Museum Wolfenbüttel</h1>
+        <!-- Инструкция -->
         <p class="instruction">
-            Lieber Besucher, in jedem Raum finden Sie Zahlen, die zu Erklärungen über die Räumlichkeiten, die ausgestellten Exponate und ihre historischen Hintergründe führen. Wählen Sie die passende Zahl und drücken Sie anschließend die Play-Taste.
+            Lieber Besucher, in jedem Raum finden Sie Zahlen, die zu Erklärungen über die Räumlichkeiten, die ausgestellten Exponate und ihre historischen Hintergründe führen. 
+            Wählen Sie die passende Zahl und drücken Sie anschließend die Play-Taste.
         </p>
         
         <!-- Поле для отображения набранного числа -->
@@ -123,14 +121,4 @@
 
         // Функция для перехода по ссылке
         function playLink() {
-            if (currentNumber) {
-                const baseUrl = "https://museumwolfenbuettel.github.io/"; // Основная часть ссылки
-                const fullUrl = baseUrl + currentNumber + "/";
-                window.location.href = fullUrl; // Переход по сформированной ссылке
-            } else {
-                alert("Bitte geben Sie eine Nummer ein, bevor Sie auf 'Play' drücken.");
-            }
-        }
-    </script>
-</body>
-</html>
+            if (currentNumb
