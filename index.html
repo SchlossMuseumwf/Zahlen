@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .instruction {
+            margin-bottom: 30px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .display {
+            font-size: 24px;
+            border: 2px solid #007BFF;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 20px auto;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .button {
+            font-size: 20px;
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .play-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .play-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Museum Guide</h1>
+        <p class="instruction">
+            Lieber Besucher, in jedem Raum sehen Sie Zahlen, die den Geschichten über die Räumlichkeiten, die Exponate und die Geschichte entsprechen. 
+            Drücken Sie die passende Zahl und anschließend die Play-Taste.
+        </p>
+        
+        <!-- Поле для отображения набранного числа -->
+        <div id="display" class="display">0</div>
+
+        <!-- Кнопки с числами -->
+        <div class="button-container">
+            <button class="button" onclick="addNumber(1)">1</button>
+            <button class="button" onclick="addNumber(2)">2</button>
+            <button class="button" onclick="addNumber(3)">3</button>
+            <button class="button" onclick="addNumber(4)">4</button>
+            <button class="button" onclick="addNumber(5)">5</button>
+            <button class="button" onclick="addNumber(6)">6</button>
+            <button class="button" onclick="addNumber(7)">7</button>
+            <button class="button" onclick="addNumber(8)">8</button>
+            <button class="button" onclick="addNumber(9)">9</button>
+            <button class="button" onclick="addNumber(0)">0</button>
+        </div>
+
+        <!-- Кнопка "Play" -->
+        <a id="play-button" href="#" class="play-button" onclick="playLink()">Play</a>
+    </div>
+
+    <script>
+        let currentNumber = '';
+
+        // Функция для добавления числа
+        function addNumber(num) {
+            if (currentNumber.length < 5) { // Ограничение длины числа до 5 цифр
+                currentNumber += num;
+                document.getElementById('display').textContent = currentNumber;
+            }
+        }
+
+        // Функция для перехода по ссылке
+        function playLink() {
+            if (currentNumber) {
+                const baseUrl = "https://museumwolfenbuettel.github.io/"; // Основная часть ссылки
+                const fullUrl = baseUrl + currentNumber + "/";
+                window.location.href = fullUrl; // Переход по сформированной ссылке
+            } else {
+                alert("Bitte geben Sie eine Nummer ein, bevor Sie auf 'Play' drücken.");
+            }
+        }
+    </script>
+</body>
+</html>
