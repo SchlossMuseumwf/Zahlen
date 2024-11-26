@@ -74,16 +74,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- Инструкция -->
         <p class="instruction">
             Lieber Besucher, in jedem Raum finden Sie Zahlen, die zu Erklärungen über die Räumlichkeiten, die ausgestellten Exponate und ihre historischen Hintergründe führen. 
             Wählen Sie die passende Zahl und drücken Sie anschließend die Play-Taste.
         </p>
-        
-        <!-- Поле для отображения набранного числа -->
         <div id="display" class="display">0</div>
-
-        <!-- Кнопки с числами и кнопка "Back" -->
         <div class="button-container">
             <button class="button" onclick="addNumber(1)">1</button>
             <button class="button" onclick="addNumber(2)">2</button>
@@ -97,28 +92,33 @@
             <button class="button" onclick="addNumber(0)">0</button>
             <button class="button back-button" onclick="removeLast()">←</button>
         </div>
-
-        <!-- Кнопка "Play" -->
         <a id="play-button" href="#" class="play-button" onclick="playLink()">Play</a>
     </div>
 
     <script>
         let currentNumber = '';
 
-        // Функция для добавления числа
         function addNumber(num) {
-            if (currentNumber.length < 5) { // Ограничение длины числа до 5 цифр
+            if (currentNumber.length < 5) {
                 currentNumber += num;
                 document.getElementById('display').textContent = currentNumber || '0';
             }
         }
 
-        // Функция для удаления последней цифры
         function removeLast() {
             currentNumber = currentNumber.slice(0, -1);
             document.getElementById('display').textContent = currentNumber || '0';
         }
 
-        // Функция для перехода по ссылке
         function playLink() {
-            if (currentNumb
+            if (currentNumber) {
+                const baseUrl = "https://museumwolfenbuettel.github.io/";
+                const fullUrl = baseUrl + currentNumber + "/";
+                window.location.href = fullUrl;
+            } else {
+                alert("Bitte geben Sie eine Nummer ein, bevor Sie auf 'Play' drücken.");
+            }
+        }
+    </script>
+</body>
+</html>
