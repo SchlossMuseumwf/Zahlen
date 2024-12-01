@@ -130,15 +130,18 @@
         const titlesUrl = "https://schlossmuseumwf.github.io/audio/titles.json";
         let titles = {};
 
+        // Загружаем JSON с названиями
         fetch(titlesUrl)
             .then(response => response.json())
             .then(data => {
                 titles = data;
+                console.log("Данные из titles.json:", titles);
             })
             .catch(error => {
                 console.error("Ошибка загрузки titles.json:", error);
             });
 
+        // Добавление числа
         function addNumber(num) {
             if (currentNumber.length < 5) {
                 currentNumber += num;
@@ -146,25 +149,30 @@
             }
         }
 
+        // Удаление последнего символа
         function removeLast() {
             currentNumber = currentNumber.slice(0, -1);
             document.getElementById('display').textContent = currentNumber || '0';
         }
 
+        // Воспроизведение аудио
         function playAudio() {
             if (currentNumber) {
-                const language = 'de';
+                const language = 'de'; // Укажите язык
                 const audioUrl = `https://schlossmuseumwf.github.io/audio/mp3/${language}/${currentNumber}.mp3`;
                 const audioPlayer = document.getElementById('audio-player');
                 const audioTitle = document.getElementById('audio-title');
 
+                // Проверяем наличие названия
                 const title = titles[language] && titles[language][currentNumber];
                 if (title) {
                     audioTitle.textContent = title;
                 } else {
+                    console.error(`Название для номера ${currentNumber} на языке ${language} не найдено в titles.json`);
                     audioTitle.textContent = `Audio Nummer: ${currentNumber}`;
                 }
 
+                // Воспроизводим аудио
                 audioPlayer.src = audioUrl;
                 audioPlayer.style.display = 'block';
                 audioPlayer.play();
