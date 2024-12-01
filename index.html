@@ -132,18 +132,18 @@
         const titlesUrl = "https://schlossmuseumwf.github.io/audio/titles.json";
         let titles = {};
 
-        // Загружаем JSON с названиями
+        // JSON-Daten laden
         fetch(titlesUrl)
             .then(response => response.json())
             .then(data => {
                 titles = data;
-                console.log("JSON-Daten geladen:", titles); // Отладочный вывод данных
+                console.log("JSON-Daten geladen:", titles); // Debug-Ausgabe
             })
             .catch(error => {
                 console.error("Fehler beim Laden von titles.json:", error);
             });
 
-        // Скрыть/показать верхнюю информацию
+        // Header-Anzeige ein-/ausschalten
         function toggleHeader(show) {
             const instruction = document.getElementById('instruction');
             const audioTitle = document.getElementById('audio-title');
@@ -156,43 +156,49 @@
             }
         }
 
-        // Добавление числа
+        // Zahl hinzufügen
         function addNumber(num) {
             if (currentNumber.length < 5) {
                 currentNumber += num;
                 document.getElementById('display').textContent = currentNumber || '0';
-                toggleHeader(false); // Скрыть верхнюю информацию
+                toggleHeader(false); // Header ausblenden
             }
         }
 
-        // Удаление последнего символа
+        // Letzte Ziffer entfernen
         function removeLast() {
             currentNumber = currentNumber.slice(0, -1);
             document.getElementById('display').textContent = currentNumber || '0';
             if (!currentNumber) {
-                toggleHeader(true); // Показать верхнюю информацию
+                toggleHeader(true); // Header anzeigen
             }
         }
 
-        // Воспроизведение аудио
+        // Audio abspielen
         function playAudio() {
             if (currentNumber) {
-                const language = 'de'; // Укажите текущий язык
+                const language = 'de'; // Deutsche Sprache
                 const audioUrl = `https://schlossmuseumwf.github.io/audio/mp3/${language}/${currentNumber}.mp3`;
                 const audioPlayer = document.getElementById('audio-player');
                 const audioTitle = document.getElementById('audio-title');
 
-                // Преобразование номера в число
+                // Titel für die aktuelle Zahl holen
                 const numericNumber = parseInt(currentNumber, 10);
+                console.log("Aktuelle Nummer:", numericNumber); // Debug-Ausgabe
                 const title = titles[language] && titles[language][numericNumber];
+                console.log("Gefundener Titel:", title); // Debug-Ausgabe
 
                 if (title) {
+                    console.log("Vor dem Update:", audioTitle.textContent); // Debug-Ausgabe
                     audioTitle.textContent = title;
+                    audioTitle.style.display = 'block'; // Sichtbar machen
+                    console.log("Nach dem Update:", audioTitle.textContent); // Debug-Ausgabe
                 } else {
-                    console.error(`Название для номера ${currentNumber} на языке ${language} не найдено в titles.json`);
+                    console.error(`Titel für Nummer ${currentNumber} in Sprache ${language} nicht gefunden.`);
                     audioTitle.textContent = `Audio Nummer: ${currentNumber}`;
                 }
 
+                // Audio-Datei abspielen
                 audioPlayer.src = audioUrl;
                 audioPlayer.style.display = 'block';
                 audioPlayer.play();
