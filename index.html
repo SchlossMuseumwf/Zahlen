@@ -126,7 +126,6 @@
 
     <script>
         let currentNumber = '';
-
         const titlesUrl = "https://schlossmuseumwf.github.io/audio/titles.json";
         let titles = {};
 
@@ -135,10 +134,10 @@
             .then(response => response.json())
             .then(data => {
                 titles = data;
-                console.log("Данные из titles.json:", titles);
+                console.log("JSON-Daten geladen:", titles); // Отладочный вывод данных
             })
             .catch(error => {
-                console.error("Ошибка загрузки titles.json:", error);
+                console.error("Fehler beim Laden von titles.json:", error);
             });
 
         // Добавление числа
@@ -158,13 +157,15 @@
         // Воспроизведение аудио
         function playAudio() {
             if (currentNumber) {
-                const language = 'de'; // Укажите язык
+                const language = 'de'; // Укажите текущий язык
                 const audioUrl = `https://schlossmuseumwf.github.io/audio/mp3/${language}/${currentNumber}.mp3`;
                 const audioPlayer = document.getElementById('audio-player');
                 const audioTitle = document.getElementById('audio-title');
 
-                // Проверяем наличие названия
-                const title = titles[language] && titles[language][currentNumber];
+                // Преобразование номера в число
+                const numericNumber = parseInt(currentNumber, 10);
+                const title = titles[language] && titles[language][numericNumber];
+
                 if (title) {
                     audioTitle.textContent = title;
                 } else {
@@ -172,7 +173,6 @@
                     audioTitle.textContent = `Audio Nummer: ${currentNumber}`;
                 }
 
-                // Воспроизводим аудио
                 audioPlayer.src = audioUrl;
                 audioPlayer.style.display = 'block';
                 audioPlayer.play();
