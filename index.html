@@ -20,6 +20,9 @@
             font-size: 18px;
             font-weight: bold;
         }
+        .hidden {
+            display: none;
+        }
         .display {
             font-size: 24px;
             border: 2px solid #007BFF;
@@ -96,7 +99,7 @@
 </head>
 <body>
     <div class="container">
-        <p class="instruction">
+        <p id="instruction" class="instruction">
             Lieber Besucher, in jedem Raum finden Sie Zahlen, die zu Erklärungen über die Räumlichkeiten, die ausgestellten Exponate und ihre historischen Hintergründe führen. 
             Wählen Sie die passende Zahl und drücken Sie anschließend die Play-Taste.
         </p>
@@ -140,11 +143,25 @@
                 console.error("Fehler beim Laden von titles.json:", error);
             });
 
+        // Скрыть/показать верхнюю информацию
+        function toggleHeader(show) {
+            const instruction = document.getElementById('instruction');
+            const audioTitle = document.getElementById('audio-title');
+            if (show) {
+                instruction.classList.remove('hidden');
+                audioTitle.classList.remove('hidden');
+            } else {
+                instruction.classList.add('hidden');
+                audioTitle.classList.add('hidden');
+            }
+        }
+
         // Добавление числа
         function addNumber(num) {
             if (currentNumber.length < 5) {
                 currentNumber += num;
                 document.getElementById('display').textContent = currentNumber || '0';
+                toggleHeader(false); // Скрыть верхнюю информацию
             }
         }
 
@@ -152,6 +169,9 @@
         function removeLast() {
             currentNumber = currentNumber.slice(0, -1);
             document.getElementById('display').textContent = currentNumber || '0';
+            if (!currentNumber) {
+                toggleHeader(true); // Показать верхнюю информацию
+            }
         }
 
         // Воспроизведение аудио
