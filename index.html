@@ -102,7 +102,7 @@
         </p>
         <div id="display" class="display">0</div>
         <div id="audio-title">Bitte wählen Sie eine Zahl</div>
-        <audio id="audio-player" controls style="width: 100%; max-width: 600px; display: none; margin: 20px auto;">
+        <audio id="audio-player" controls style="width: 100%; max-width: 600px; display: none; margin: 20px auto;" controlslist="nodownload">
             Ihr Browser unterstützt den Audioplayer nicht.
         </audio>
         <div class="button-container">
@@ -127,11 +127,9 @@
     <script>
         let currentNumber = '';
 
-        // URL JSON-файла
         const titlesUrl = "https://schlossmuseumwf.github.io/audio/titles.json";
         let titles = {};
 
-        // Загружаем JSON с названиями
         fetch(titlesUrl)
             .then(response => response.json())
             .then(data => {
@@ -141,7 +139,6 @@
                 console.error("Ошибка загрузки titles.json:", error);
             });
 
-        // Добавление числа
         function addNumber(num) {
             if (currentNumber.length < 5) {
                 currentNumber += num;
@@ -149,21 +146,18 @@
             }
         }
 
-        // Удаление последнего символа
         function removeLast() {
             currentNumber = currentNumber.slice(0, -1);
             document.getElementById('display').textContent = currentNumber || '0';
         }
 
-        // Воспроизведение аудио
         function playAudio() {
             if (currentNumber) {
-                const language = 'de'; // Укажите язык (например, de, en, fr)
+                const language = 'de';
                 const audioUrl = `https://schlossmuseumwf.github.io/audio/mp3/${language}/${currentNumber}.mp3`;
                 const audioPlayer = document.getElementById('audio-player');
                 const audioTitle = document.getElementById('audio-title');
 
-                // Установка названия файла
                 const title = titles[language] && titles[language][currentNumber];
                 if (title) {
                     audioTitle.textContent = title;
@@ -171,7 +165,6 @@
                     audioTitle.textContent = `Audio Nummer: ${currentNumber}`;
                 }
 
-                // Установка и воспроизведение аудиофайла
                 audioPlayer.src = audioUrl;
                 audioPlayer.style.display = 'block';
                 audioPlayer.play();
