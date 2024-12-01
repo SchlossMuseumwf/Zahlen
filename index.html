@@ -86,6 +86,12 @@
         .back-link:hover {
             background-color: #e0a800;
         }
+        #audio-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -95,6 +101,10 @@
             Wählen Sie die passende Zahl und drücken Sie anschließend die Play-Taste.
         </p>
         <div id="display" class="display">0</div>
+        <div id="audio-title">Bitte wählen Sie eine Zahl</div>
+        <audio id="audio-player" controls style="width: 100%; max-width: 600px; display: none; margin: 20px auto;">
+            Ihr Browser unterstützt den Audioplayer nicht.
+        </audio>
         <div class="button-container">
             <button class="button" onclick="addNumber(1)">1</button>
             <button class="button" onclick="addNumber(2)">2</button>
@@ -110,13 +120,14 @@
         </div>
         <div class="link-container">
             <a id="back-link" href="https://schlossmuseumwf.github.io/willkommen/" class="back-link">Zurück zur Sprachauswahl</a>
-            <a id="play-button" href="#" class="play-button" onclick="playLink()">Play</a>
+            <a id="play-button" href="#" class="play-button" onclick="playAudio()">Play</a>
         </div>
     </div>
 
     <script>
         let currentNumber = '';
 
+        // Добавление числа
         function addNumber(num) {
             if (currentNumber.length < 5) {
                 currentNumber += num;
@@ -124,16 +135,27 @@
             }
         }
 
+        // Удаление последнего символа
         function removeLast() {
             currentNumber = currentNumber.slice(0, -1);
             document.getElementById('display').textContent = currentNumber || '0';
         }
 
-        function playLink() {
+        // Воспроизведение аудио
+        function playAudio() {
             if (currentNumber) {
-                const baseUrl = "https://museumwolfenbuettel.github.io/";
-                const fullUrl = baseUrl + currentNumber + "/";
-                window.location.href = fullUrl;
+                const language = 'de'; // Укажите язык (например, de, en, fr)
+                const audioUrl = `https://schlossmuseumwf.github.io/audio/mp3/${language}/${currentNumber}.mp3`;
+                const audioPlayer = document.getElementById('audio-player');
+                const audioTitle = document.getElementById('audio-title');
+
+                // Настройка аудиоплеера
+                audioPlayer.src = audioUrl;
+                audioPlayer.style.display = 'block';
+                audioPlayer.play();
+
+                // Установка названия
+                audioTitle.textContent = `Audio Nummer: ${currentNumber}`;
             } else {
                 alert("Bitte geben Sie eine Nummer ein, bevor Sie auf 'Play' drücken.");
             }
