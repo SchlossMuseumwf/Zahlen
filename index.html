@@ -127,6 +127,20 @@
     <script>
         let currentNumber = '';
 
+        // URL JSON-файла
+        const titlesUrl = "https://schlossmuseumwf.github.io/audio/titles.json";
+        let titles = {};
+
+        // Загружаем JSON с названиями
+        fetch(titlesUrl)
+            .then(response => response.json())
+            .then(data => {
+                titles = data;
+            })
+            .catch(error => {
+                console.error("Ошибка загрузки titles.json:", error);
+            });
+
         // Добавление числа
         function addNumber(num) {
             if (currentNumber.length < 5) {
@@ -149,13 +163,18 @@
                 const audioPlayer = document.getElementById('audio-player');
                 const audioTitle = document.getElementById('audio-title');
 
-                // Настройка аудиоплеера
+                // Установка названия файла
+                const title = titles[language] && titles[language][currentNumber];
+                if (title) {
+                    audioTitle.textContent = title;
+                } else {
+                    audioTitle.textContent = `Audio Nummer: ${currentNumber}`;
+                }
+
+                // Установка и воспроизведение аудиофайла
                 audioPlayer.src = audioUrl;
                 audioPlayer.style.display = 'block';
                 audioPlayer.play();
-
-                // Установка названия
-                audioTitle.textContent = `Audio Nummer: ${currentNumber}`;
             } else {
                 alert("Bitte geben Sie eine Nummer ein, bevor Sie auf 'Play' drücken.");
             }
