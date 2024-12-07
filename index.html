@@ -60,9 +60,8 @@
             background-color: #CC0000;
         }
         .play-button {
-            font-size: 16px;
-            padding: 0;
-            width: 120px;
+            font-size: 20px;
+            width: 60px;
             height: 60px;
             border: none;
             border-radius: 5px;
@@ -75,10 +74,27 @@
         }
         .link-container {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
+            align-items: center;
+            gap: 15px;
             margin-top: 20px;
+        }
+        .back-link {
+            font-size: 16px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffc107;
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .back-link:hover {
+            background-color: #e0a800;
         }
         #audio-title {
             font-size: 20px;
@@ -111,7 +127,7 @@
             <button class="button" onclick="addNumber(9)">9</button>
             <button class="button" onclick="addNumber(0)">0</button>
             <button class="button back-button" onclick="removeLast()">←</button>
-            <button id="play-button" class="play-button" onclick="playAudio()">Play</button>
+            <button id="play-button" class="play-button" onclick="playAudio()">▶</button>
         </div>
         <div class="link-container">
             <a id="back-link" href="https://schlossmuseumwf.github.io/willkommen/" class="back-link">Zurück zur Sprachauswahl</a>
