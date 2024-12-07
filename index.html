@@ -59,35 +59,26 @@
         .back-button:hover {
             background-color: #CC0000;
         }
-        .link-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .play-button, .back-link {
-            padding: 8px 16px;
+        .play-button {
             font-size: 16px;
+            padding: 0;
+            width: 120px;
+            height: 60px;
+            border: none;
+            border-radius: 5px;
             background-color: #28a745;
             color: white;
-            text-decoration: none;
-            border-radius: 5px;
             cursor: pointer;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         .play-button:hover {
             background-color: #218838;
         }
-        .back-link {
-            background-color: #ffc107;
-            color: black;
-        }
-        .back-link:hover {
-            background-color: #e0a800;
+        .link-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
         }
         #audio-title {
             font-size: 20px;
@@ -120,10 +111,10 @@
             <button class="button" onclick="addNumber(9)">9</button>
             <button class="button" onclick="addNumber(0)">0</button>
             <button class="button back-button" onclick="removeLast()">←</button>
+            <button id="play-button" class="play-button" onclick="playAudio()">Play</button>
         </div>
         <div class="link-container">
             <a id="back-link" href="https://schlossmuseumwf.github.io/willkommen/" class="back-link">Zurück zur Sprachauswahl</a>
-            <a id="play-button" href="#" class="play-button" onclick="playAudio()">Play</a>
         </div>
     </div>
 
@@ -132,18 +123,16 @@
         const titlesUrl = "https://schlossmuseumwf.github.io/audio/titles.json";
         let titles = {};
 
-        // JSON-Daten laden
         fetch(titlesUrl)
             .then(response => response.json())
             .then(data => {
                 titles = data;
-                console.log("JSON-Daten geladen:", titles); // Debug-Ausgabe
+                console.log("JSON-Daten geladen:", titles);
             })
             .catch(error => {
                 console.error("Fehler beim Laden von titles.json:", error);
             });
 
-        // Header-Anzeige ein-/ausschalten
         function toggleHeader(show) {
             const instruction = document.getElementById('instruction');
             const audioTitle = document.getElementById('audio-title');
@@ -156,49 +145,39 @@
             }
         }
 
-        // Zahl hinzufügen
         function addNumber(num) {
             if (currentNumber.length < 5) {
                 currentNumber += num;
                 document.getElementById('display').textContent = currentNumber || '0';
-                toggleHeader(false); // Header ausblenden
+                toggleHeader(false);
             }
         }
 
-        // Letzte Ziffer entfernen
         function removeLast() {
             currentNumber = currentNumber.slice(0, -1);
             document.getElementById('display').textContent = currentNumber || '0';
             if (!currentNumber) {
-                toggleHeader(true); // Header anzeigen
+                toggleHeader(true);
             }
         }
 
-        // Audio abspielen
         function playAudio() {
             if (currentNumber) {
-                const language = 'de'; // Deutsche Sprache
+                const language = 'de';
                 const audioUrl = `https://schlossmuseumwf.github.io/audio/mp3/${language}/${currentNumber}.mp3`;
                 const audioPlayer = document.getElementById('audio-player');
                 const audioTitle = document.getElementById('audio-title');
 
-                // Titel für die aktuelle Zahl holen
                 const numericNumber = parseInt(currentNumber, 10);
-                console.log("Aktuelle Nummer:", numericNumber); // Debug-Ausgabe
                 const title = titles[language] && titles[language][numericNumber];
-                console.log("Gefundener Titel:", title); // Debug-Ausgabe
 
                 if (title) {
-                    console.log("Vor dem Update:", audioTitle.textContent); // Debug-Ausgabe
                     audioTitle.textContent = title;
-                    audioTitle.style.display = 'block'; // Sichtbar machen
-                    console.log("Nach dem Update:", audioTitle.textContent); // Debug-Ausgabe
+                    audioTitle.style.display = 'block';
                 } else {
-                    console.error(`Titel für Nummer ${currentNumber} in Sprache ${language} nicht gefunden.`);
                     audioTitle.textContent = `Audio Nummer: ${currentNumber}`;
                 }
 
-                // Audio-Datei abspielen
                 audioPlayer.src = audioUrl;
                 audioPlayer.style.display = 'block';
                 audioPlayer.play();
